@@ -511,6 +511,8 @@ Badge persistence
 
 # Faz 7 — Harf Çarkı
 
+**✅ TAMAMLANDI** — Harf Çarkı: JSON içerikli hece havuzu (MA/BA/PA/TA/DA/NA/SA/LA), döndür → hece + prompt → kaydet/dinle/tekrar kaydet → bitir akışı; AudioService (record + just_audio), mikrofon izni yalnızca KAYDET anında isteniyor, izin reddinde oyun kayıtsız modda oynanabiliyor; kayıt hiçbir zaman kalıcı tutulmuyor (bitirmede ve dispose'da silme). Gerçek cihazda uçtan uca doğrulandı: gerçek Android mikrofon izin diyaloğu, kayıt/dinleme/tekrar kaydetme, +30 XP tamamlama, Ana Sayfa'da XP/streak/"Mini oyun oyna" güncellemesi. QA sırasında bulunan gerçek hata (arka tuşla kayıt ortasında çıkışta dosya silinmiyordu) düzeltildi ve cihazda yeniden doğrulandı — cache boş kalıyor. analyze/test (68/68)/debug APK geçti.
+
 **Amaç:** İlk gerçek mini oyunu tamamlamak.
 
 ### Akış

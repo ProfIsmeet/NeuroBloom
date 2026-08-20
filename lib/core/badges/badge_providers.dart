@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../features/exercises/application/exercise_completion_providers.dart';
 import '../../features/exercises/application/exercise_providers.dart';
+import '../../features/games/application/game_completion_providers.dart';
 import '../../features/onboarding/application/profile_providers.dart';
 import '../content/content_providers.dart';
 import '../streak/streak_providers.dart';
@@ -44,7 +45,7 @@ final badgeStatsProvider = Provider<BadgeStats>((ref) {
     currentStreak: ref.watch(currentStreakProvider),
     totalExerciseCount: completions.length,
     exerciseCountByCategory: byCategory,
-    gameCount: 0,
+    gameCount: (ref.watch(gameCompletionsProvider).valueOrNull ?? []).length,
     activeDaysCount: ref.watch(activeDateKeysProvider).length,
   );
 });

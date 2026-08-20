@@ -5,6 +5,7 @@ import '../../features/assistant/presentation/assistant_screen.dart';
 import '../../features/exercises/presentation/exercise_runner_screen.dart';
 import '../../features/exercises/presentation/exercises_screen.dart';
 import '../../features/games/presentation/games_screen.dart';
+import '../../features/games/presentation/letter_wheel_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
 import '../../features/onboarding/presentation/splash_screen.dart';
@@ -59,6 +60,12 @@ abstract final class AppRouter {
               GoRoute(
                 path: '/games',
                 builder: (context, state) => const GamesScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'letter-wheel',
+                    builder: (context, state) => const LetterWheelScreen(),
+                  ),
+                ],
               ),
             ],
           ),

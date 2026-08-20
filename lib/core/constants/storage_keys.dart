@@ -6,4 +6,5 @@ abstract final class StorageKeys {
   static const String exerciseCompletions = 'exercise_completions';
   static const String xpEvents = 'xp_events';
   static const String unlockedBadges = 'unlocked_badges';
+  static const String gameCompletions = 'game_completions';
 }

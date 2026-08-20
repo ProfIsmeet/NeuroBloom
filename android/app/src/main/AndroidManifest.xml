@@ -1,4 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Only requested when the child taps the record button in Harf
+         Çarkı (Faz 7); no other permission is required by the app. -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <application
         android:label="neurobloom"
         android:name="${applicationName}"

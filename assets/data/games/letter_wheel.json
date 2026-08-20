@@ -1,0 +1,10 @@
+[
+  { "id": "ma", "syllable": "MA", "prompt": "MA sesiyle bir kelime söyle." },
+  { "id": "ba", "syllable": "BA", "prompt": "BA sesiyle bir kelime söyle." },
+  { "id": "pa", "syllable": "PA", "prompt": "PA sesiyle bir kelime söyle." },
+  { "id": "ta", "syllable": "TA", "prompt": "TA sesiyle bir kelime söyle." },
+  { "id": "da", "syllable": "DA", "prompt": "DA sesiyle bir kelime söyle." },
+  { "id": "na", "syllable": "NA", "prompt": "NA sesiyle bir kelime söyle." },
+  { "id": "sa", "syllable": "SA", "prompt": "SA sesiyle bir kelime söyle." },
+  { "id": "la", "syllable": "LA", "prompt": "LA sesiyle bir kelime söyle." }
+]

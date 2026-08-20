@@ -8,6 +8,7 @@ import '../../../core/theme/app_dimens.dart';
 import '../../../core/utils/date_key.dart';
 import '../../../core/xp/xp_providers.dart';
 import '../../exercises/application/exercise_completion_providers.dart';
+import '../../games/application/game_completion_providers.dart';
 import '../../onboarding/application/profile_providers.dart';
 import '../../onboarding/presentation/widgets/avatar_painter.dart';
 import '../application/emotion_providers.dart';
@@ -382,6 +383,11 @@ class _TodayGoals extends ConsumerWidget {
         ) ??
         false;
 
+    final gamesAsync = ref.watch(gameCompletionsProvider);
+    final gameDone =
+        gamesAsync.valueOrNull?.any((g) => dateKey(g.date) == todayKey) ??
+        false;
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(AppDimens.spaceMd),
@@ -392,8 +398,7 @@ class _TodayGoals extends ConsumerWidget {
             const SizedBox(height: AppDimens.spaceSm),
             _GoalRow(label: 'Duygunu seç', done: emotionDone),
             _GoalRow(label: 'Egzersiz yap', done: exerciseDone),
-            // Mini oyun tamamlama takibi Faz 7'de eklenecek.
-            const _GoalRow(label: 'Mini oyun oyna', done: false),
+            _GoalRow(label: 'Mini oyun oyna', done: gameDone),
           ],
         ),
       ),
