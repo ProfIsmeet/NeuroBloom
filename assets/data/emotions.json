@@ -1,0 +1,9 @@
+[
+  { "id": "very_happy", "emoji": "😊", "label": "Çok mutlu" },
+  { "id": "happy", "emoji": "😄", "label": "Mutlu" },
+  { "id": "neutral", "emoji": "😐", "label": "Normal" },
+  { "id": "sad", "emoji": "😔", "label": "Üzgün" },
+  { "id": "anxious", "emoji": "😟", "label": "Endişeli" },
+  { "id": "angry", "emoji": "😠", "label": "Kızgın" },
+  { "id": "surprised", "emoji": "😮", "label": "Şaşkın" }
+]

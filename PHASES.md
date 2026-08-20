@@ -1,5 +1,7 @@
 ## Faz 0 — Ortam ve proje doğrulama
 
+**✅ TAMAMLANDI** — flutter doctor, analyze (0 error), test, debug APK ve gerçek cihazda (Samsung Galaxy A22) açılış doğrulandı.
+
 **Amaç:** Geliştirme ortamının Flutter/Android APK için hazır olduğunu doğrulamak.
 
 ### Yapılacaklar
@@ -60,6 +62,8 @@ flutter build apk --debug
 
 # Faz 1 — Design System + App Shell
 
+**✅ TAMAMLANDI** — Material 3 tema, renk paleti, go_router bottom navigation (Home/Exercises/Games/Assistant/Progress/Premium), placeholder ekranlar; analyze/test/debug APK ve cihaz doğrulaması geçti.
+
 **Amaç:** NeuroBloom'un görsel ve navigasyon temelini oluşturmak.
 
 ### Yapılacaklar
@@ -119,6 +123,8 @@ Manuel:
 ---
 
 # Faz 2 — Splash + Onboarding + Profil
+
+**✅ TAMAMLANDI** — Splash animasyonu, 5 adımlı onboarding akışı, 8 orijinal avatar, Hive üzerinden kalıcı UserProfile; analyze/test/debug APK ve cihaz doğrulaması geçti.
 
 **Amaç:** İlk kullanıcı deneyimini tamamlamak.
 
@@ -198,6 +204,8 @@ Manuel test:
 
 # Faz 3 — Ana Ekran + Duygu Sistemi
 
+**✅ TAMAMLANDI** — Profil header, NeuroBot mesajı, 7 duygu seçici, haftalık duygu takvimi, günlük görev listesi, haftalık ilerleme; gerçek cihazda force-stop + yeniden açma testiyle verinin kalıcılığı doğrulandı. analyze/test/debug APK geçti.
+
 **Amaç:** Çocuğun günlük kullanım döngüsünü oluşturmak.
 
 ### Ana ekran
@@ -263,6 +271,8 @@ Unit test:
 ---
 
 # Faz 4 — Egzersiz Content Engine
+
+**✅ TAMAMLANDI** — tongue/lips/speech JSON içerik motoru, Exercise modeli, enabled/age filtreleme, gerçek cihazda görsel doğrulama yapıldı. Kullanıcı onayıyla yer tutucu (placeholder) egzersiz içeriği kullanılıyor; orijinal 9 dil + 12 dudak listesi daha sonra sağlanabilir.
 
 Bu faz çok önemli.
 
@@ -346,6 +356,8 @@ Category filtering
 ---
 
 # Faz 5 — Dil/Dudak Egzersizleri
+
+**✅ TAMAMLANDI** — Egzersiz koşucusu (BAŞLA, tekrar sayacı, dairesel geri sayım), TTS servisi (tr-TR, kapatılabilir), XP ödülü ve tamamlama kaydı, kategori bazlı animasyon fallback'i; gerçek cihazda adb üzerinden uçtan uca doğrulandı (onboarding → egzersiz listesi → BAŞLA → 5 tekrar → tamamlanma ekranı → Home'da görev güncellemesi). analyze/test/debug APK geçti.
 
 **Amaç:** NeuroBloom'un ana fonksiyonunu çalışır hale getirmek.
 
