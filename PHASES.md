@@ -650,6 +650,8 @@ flutter build apk --debug
 
 # Faz 9 — Ebeveyn Paneli
 
+**✅ TAMAMLANDI** — Ebeveyn PIN'i PBKDF2-HMAC-SHA256 ile tuzlanıp hashleniyor, salt+hash secure storage'da (Hive'dan ayrı) tutuluyor, asla plaintext saklanmıyor; ilk kurulumda oluşturuluyor. Dashboard: Toplam Egzersiz/XP/Streak kartları + 3 gerçek grafik (fl_chart: haftalık aktivite bar chart, duygu dağılımı pie chart, XP ilerlemesi line chart), tamamı gerçek yerel veriden. `/parent/dashboard` rotası router redirect ile korunuyor — doğru PIN olmadan (parentUnlockedProvider) asla açılmıyor, deep-link ile bile. PIN girişi ekran-üstü sayısal tuş takımı ile yapılıyor (OS klavyesine bağımlı değil). QA sırasında bulunan gerçek hata (yanlış PIN sonrası gizli TextField'ın IME bağlantısı bir daha güvenilir şekilde açılmıyordu) kökten çözüldü: gizli TextField yaklaşımı tamamen kaldırılıp ekran-üstü tuş takımıyla değiştirildi; ayrıca bu yeni ekranda bulunan bir overflow hatası da düzeltildi. Gerçek cihazda uçtan uca doğrulandı: PIN oluşturma, doğru PIN, yanlış PIN + hemen ardından doğru PIN ile tekrar deneme, kilitleme. analyze/test (92/92)/debug APK geçti.
+
 **Amaç:** Ebeveynin çocuğun kullanımını güvenli şekilde takip etmesini sağlamak.
 
 ### PIN

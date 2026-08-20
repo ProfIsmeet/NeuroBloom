@@ -24,15 +24,15 @@ void main() async {
   );
 }
 
-class NeuroBloomApp extends StatefulWidget {
+class NeuroBloomApp extends ConsumerStatefulWidget {
   const NeuroBloomApp({super.key});
 
   @override
-  State<NeuroBloomApp> createState() => _NeuroBloomAppState();
+  ConsumerState<NeuroBloomApp> createState() => _NeuroBloomAppState();
 }
 
-class _NeuroBloomAppState extends State<NeuroBloomApp> {
-  late final GoRouter _router = AppRouter.createRouter();
+class _NeuroBloomAppState extends ConsumerState<NeuroBloomApp> {
+  late final GoRouter _router = AppRouter.createRouter(ref);
 
   @override
   Widget build(BuildContext context) {

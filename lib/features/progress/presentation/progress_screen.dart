@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/streak/streak_providers.dart';
 import '../../../core/theme/app_dimens.dart';
@@ -19,7 +20,16 @@ class ProgressScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(title: const Text('İlerleme')),
+      appBar: AppBar(
+        title: const Text('İlerleme'),
+        actions: [
+          IconButton(
+            tooltip: 'Ebeveyn Alanı',
+            icon: const Icon(Icons.lock_rounded),
+            onPressed: () => context.push('/parent'),
+          ),
+        ],
+      ),
       body: ListView(
         padding: const EdgeInsets.all(AppDimens.spaceLg),
         children: const [
