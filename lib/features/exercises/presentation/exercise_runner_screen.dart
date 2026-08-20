@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/badges/badge_icon.dart';
+import '../../../core/badges/badge_providers.dart';
 import '../../../core/services/tts_providers.dart';
 import '../../../core/theme/app_dimens.dart';
+import '../../../core/widgets/success_celebration.dart';
 import '../application/exercise_providers.dart';
 import '../application/exercise_runner_controller.dart';
 import '../domain/exercise.dart';
@@ -98,7 +101,10 @@ class _ExerciseRunnerBody extends ConsumerWidget {
               const SizedBox(height: AppDimens.spaceLg),
               Expanded(
                 child: switch (state.phase) {
-                  ExerciseRunnerPhase.completed => _CompletedView(exercise: exercise),
+                  ExerciseRunnerPhase.completed => _CompletedView(
+                    exercise: exercise,
+                    newlyUnlockedBadgeIds: state.newlyUnlockedBadgeIds,
+                  ),
                   ExerciseRunnerPhase.skipped => const _SkippedView(),
                   _ => _ActiveView(exercise: exercise, state: state),
                 },
@@ -175,27 +181,58 @@ class _ActiveView extends StatelessWidget {
   }
 }
 
-class _CompletedView extends StatelessWidget {
-  const _CompletedView({required this.exercise});
+class _CompletedView extends ConsumerWidget {
+  const _CompletedView({
+    required this.exercise,
+    required this.newlyUnlockedBadgeIds,
+  });
 
   final Exercise exercise;
+  final Set<String> newlyUnlockedBadgeIds;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final allBadges = ref.watch(allBadgesProvider).valueOrNull ?? [];
+    final unlockedBadges = allBadges
+        .where((b) => newlyUnlockedBadgeIds.contains(b.id))
+        .toList();
+
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.celebration_rounded,
-            size: 72,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-          const SizedBox(height: AppDimens.spaceMd),
-          Text('Harika!', style: Theme.of(context).textTheme.titleLarge),
-          const SizedBox(height: AppDimens.spaceSm),
-          Text('+${exercise.xp} XP'),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SuccessCelebration(),
+            Text('Harika!', style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(height: AppDimens.spaceSm),
+            Text('+${exercise.xp} XP'),
+            if (unlockedBadges.isNotEmpty) ...[
+              const SizedBox(height: AppDimens.spaceLg),
+              Text(
+                'Yeni Rozet!',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: AppDimens.spaceSm),
+              Wrap(
+                spacing: AppDimens.spaceMd,
+                alignment: WrapAlignment.center,
+                children: unlockedBadges.map((badge) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        badgeIconFor(badge.icon),
+                        color: Theme.of(context).colorScheme.secondary,
+                        size: 36,
+                      ),
+                      Text(badge.title, textAlign: TextAlign.center),
+                    ],
+                  );
+                }).toList(),
+              ),
+            ],
+          ],
+        ),
       ),
     );
   }

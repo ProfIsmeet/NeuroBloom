@@ -78,7 +78,7 @@ void main() {
     expect(finalState.phase, ExerciseRunnerPhase.completed);
     expect(finalState.currentRep, 2);
 
-    final xp = await container.read(totalXpProvider.future);
+    final xp = container.read(totalXpProvider);
     expect(xp, 25);
 
     final completions = await container.read(exerciseCompletionsProvider.future);
@@ -103,11 +103,43 @@ void main() {
     // Give any stray timer a chance to fire; it must not, since skip cancels it.
     await Future.delayed(const Duration(seconds: 2));
 
-    final xp = await container.read(totalXpProvider.future);
+    final xp = container.read(totalXpProvider);
     expect(xp, 0);
     final completions = await container.read(exerciseCompletionsProvider.future);
     expect(completions.any((c) => c.exerciseId == exercise.id), isFalse);
   });
+
+  test(
+    'completing the same exercise twice the same day awards XP once, '
+    'but still records both completions',
+    () async {
+      final exercise = _exercise(id: 'repeat_ex', duration: 1, repetitions: 1, xp: 15);
+
+      container.listen(exerciseRunnerControllerProvider(exercise), (_, _) {});
+      final firstController = container.read(
+        exerciseRunnerControllerProvider(exercise).notifier,
+      );
+      firstController.start();
+      await Future.delayed(const Duration(milliseconds: 1500));
+      expect(container.read(totalXpProvider), 15);
+
+      // A fresh runner instance for the same exercise (as if the child
+      // re-opened it from the list), same day.
+      final secondController = container.read(
+        exerciseRunnerControllerProvider(exercise).notifier,
+      );
+      secondController.start();
+      await Future.delayed(const Duration(milliseconds: 1500));
+
+      expect(container.read(totalXpProvider), 15, reason: 'no duplicate XP');
+      final completions = await container.read(exerciseCompletionsProvider.future);
+      expect(
+        completions.where((c) => c.exerciseId == exercise.id).length,
+        2,
+        reason: 'both completions still recorded for history/streak',
+      );
+    },
+  );
 
   test('completes normally even when TTS is disabled (Noop implementation)', () async {
     final exercise = _exercise(id: 'tts_off_ex', duration: 1, repetitions: 1, xp: 10);

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/badges/badge_icon.dart';
+import '../../../core/badges/badge_providers.dart';
+import '../../../core/streak/streak_providers.dart';
 import '../../../core/theme/app_dimens.dart';
 import '../../../core/utils/date_key.dart';
+import '../../../core/xp/xp_providers.dart';
 import '../../exercises/application/exercise_completion_providers.dart';
 import '../../onboarding/application/profile_providers.dart';
 import '../../onboarding/presentation/widgets/avatar_painter.dart';
@@ -59,6 +63,11 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final profileAsync = ref.watch(profileControllerProvider);
+    // Awards once-per-day login XP the first time Home is shown after
+    // onboarding; idempotent, so this is safe to watch on every rebuild.
+    ref.watch(dailyLoginAwardProvider);
+    // Catches up badge unlocks earned before this app session started.
+    ref.watch(badgeRefreshOnLoadProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Ana Sayfa')),
@@ -79,6 +88,8 @@ class HomeScreen extends ConsumerWidget {
                     _openAvatarPicker(context, ref, profile.avatarId),
               ),
               const SizedBox(height: AppDimens.spaceLg),
+              const _XpStreakBar(),
+              const SizedBox(height: AppDimens.spaceLg),
               const _NeuroBotPrompt(),
               const SizedBox(height: AppDimens.spaceLg),
               const _EmotionSelector(),
@@ -88,10 +99,117 @@ class HomeScreen extends ConsumerWidget {
               const _TodayGoals(),
               const SizedBox(height: AppDimens.spaceLg),
               const _WeeklyProgress(),
+              const SizedBox(height: AppDimens.spaceLg),
+              const _BadgesSection(),
             ],
           );
         },
       ),
+    );
+  }
+}
+
+class _XpStreakBar extends ConsumerWidget {
+  const _XpStreakBar();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final totalXp = ref.watch(totalXpProvider);
+    final streak = ref.watch(currentStreakProvider);
+
+    return Row(
+      children: [
+        Expanded(
+          child: _StatChip(
+            icon: Icons.star_rounded,
+            label: '$totalXp XP',
+          ),
+        ),
+        const SizedBox(width: AppDimens.spaceMd),
+        Expanded(
+          child: _StatChip(
+            icon: Icons.local_fire_department_rounded,
+            label: '$streak gün seri',
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _StatChip extends StatelessWidget {
+  const _StatChip({required this.icon, required this.label});
+
+  final IconData icon;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppDimens.spaceMd,
+          vertical: AppDimens.spaceSm,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, color: Theme.of(context).colorScheme.primary),
+            const SizedBox(width: AppDimens.spaceSm),
+            Text(label, style: Theme.of(context).textTheme.titleSmall),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _BadgesSection extends ConsumerWidget {
+  const _BadgesSection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final allBadges = ref.watch(allBadgesProvider).valueOrNull ?? [];
+    final unlockedIds = ref.watch(unlockedBadgesProvider).valueOrNull ?? {};
+
+    if (allBadges.isEmpty) return const SizedBox.shrink();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Rozetler (${unlockedIds.length}/${allBadges.length})',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        const SizedBox(height: AppDimens.spaceSm),
+        Wrap(
+          spacing: AppDimens.spaceMd,
+          runSpacing: AppDimens.spaceMd,
+          children: allBadges.map((badge) {
+            final unlocked = unlockedIds.contains(badge.id);
+            return Opacity(
+              opacity: unlocked ? 1 : 0.35,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    badgeIconFor(badge.icon),
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                  SizedBox(
+                    width: 72,
+                    child: Text(
+                      badge.title,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }).toList(),
+        ),
+      ],
     );
   }
 }

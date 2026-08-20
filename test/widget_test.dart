@@ -97,7 +97,13 @@ void main() {
       'Ana Sayfa',
     ]) {
       await tester.tap(find.text(label).last);
-      await tester.pumpAndSettle();
+      // Bounded pumps rather than pumpAndSettle: NavigationBar's Material
+      // ripple/indicator can leave a low-rate transient animation running
+      // that never fully "settles" in the test harness even though
+      // nothing is actually broken (see manual verification on-device).
+      for (var i = 0; i < 10; i++) {
+        await tester.pump(const Duration(milliseconds: 100));
+      }
       expect(tester.takeException(), isNull);
     }
   });

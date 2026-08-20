@@ -1,0 +1,72 @@
+[
+  {
+    "id": "first_step",
+    "title": "İlk Adım",
+    "description": "İlk egzersizini tamamladın!",
+    "icon": "flag_rounded",
+    "rule": { "type": "exercise_count", "threshold": 1 }
+  },
+  {
+    "id": "streak_3",
+    "title": "3 Günlük Seri",
+    "description": "3 gün üst üste pratik yaptın.",
+    "icon": "local_fire_department_rounded",
+    "rule": { "type": "streak", "threshold": 3 }
+  },
+  {
+    "id": "streak_7",
+    "title": "7 Günlük Seri",
+    "description": "7 gün üst üste pratik yaptın.",
+    "icon": "whatshot_rounded",
+    "rule": { "type": "streak", "threshold": 7 }
+  },
+  {
+    "id": "sound_explorer",
+    "title": "Ses Kaşifi",
+    "description": "5 dil egzersizi tamamladın.",
+    "icon": "record_voice_over_rounded",
+    "rule": { "type": "category_count", "category": "tongue", "threshold": 5 }
+  },
+  {
+    "id": "lip_hero",
+    "title": "Dudak Kahramanı",
+    "description": "5 dudak egzersizi tamamladın.",
+    "icon": "sentiment_very_satisfied_rounded",
+    "rule": { "type": "category_count", "category": "lips", "threshold": 5 }
+  },
+  {
+    "id": "game_lover",
+    "title": "Oyun Aşığı",
+    "description": "5 mini oyun oynadın.",
+    "icon": "sports_esports_rounded",
+    "rule": { "type": "game_count", "threshold": 5 }
+  },
+  {
+    "id": "xp_500",
+    "title": "500 XP",
+    "description": "Toplam 500 XP topladın.",
+    "icon": "star_half_rounded",
+    "rule": { "type": "xp", "threshold": 500 }
+  },
+  {
+    "id": "xp_1000",
+    "title": "1000 XP",
+    "description": "Toplam 1000 XP topladın.",
+    "icon": "star_rounded",
+    "rule": { "type": "xp", "threshold": 1000 }
+  },
+  {
+    "id": "consistency",
+    "title": "İstikrar",
+    "description": "14 farklı günde pratik yaptın.",
+    "icon": "verified_rounded",
+    "rule": { "type": "active_days", "threshold": 14 }
+  },
+  {
+    "id": "neurobloom_star",
+    "title": "NeuroBloom Yıldızı",
+    "description": "Diğer tüm rozetleri kazandın!",
+    "icon": "military_tech_rounded",
+    "rule": { "type": "all_badges" }
+  }
+]

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/gamification/gamification_refresh.dart';
 import '../../../core/services/tts_providers.dart';
 import '../../../core/xp/xp_providers.dart';
 import '../domain/exercise.dart';
@@ -56,7 +57,19 @@ class ExerciseRunnerController extends StateNotifier<ExerciseRunnerState> {
     await _ref
         .read(exerciseCompletionsProvider.notifier)
         .recordCompletion(exercise.id);
-    await _ref.read(totalXpProvider.notifier).addXp(exercise.xp);
+    // Keyed by exerciseId + day: repeating the same exercise on the same
+    // day still records the completion (for history/streak) but only the
+    // first run of the day awards XP, so spamming BAŞLA can't farm XP.
+    await _ref
+        .read(xpEventsProvider.notifier)
+        .award(
+          activityType: 'exercise',
+          sourceId: exercise.id,
+          amount: exercise.xp,
+        );
+    final newlyUnlocked = await refreshGamification(_ref);
+    if (!mounted) return;
+    state = state.copyWith(newlyUnlockedBadgeIds: newlyUnlocked);
   }
 
   void skip() {

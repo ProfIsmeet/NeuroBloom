@@ -1,6 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/content/content_providers.dart';
+import '../../../core/constants/xp_values.dart';
+import '../../../core/gamification/gamification_refresh.dart';
+import '../../../core/xp/xp_providers.dart';
 import '../../onboarding/application/profile_providers.dart';
 import '../data/emotion_content_repository.dart';
 import '../data/emotion_record_repository.dart';
@@ -40,6 +43,11 @@ class EmotionRecordsController extends AsyncNotifier<Map<String, String>> {
         .read(emotionRecordRepositoryProvider)
         .recordEmotion(DateTime.now(), emotionId);
     state = AsyncData(updated);
+    // Idempotent per day: changing today's emotion again never re-awards.
+    await ref
+        .read(xpEventsProvider.notifier)
+        .award(activityType: 'emotion', sourceId: 'daily', amount: XpValues.emotion);
+    await refreshGamification(ref);
   }
 }
 

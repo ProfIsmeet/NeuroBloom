@@ -441,6 +441,8 @@ Test:
 
 # Faz 6 — XP + Yıldız + Streak + Rozetler
 
+**✅ TAMAMLANDI** — İdempotent XpEvent ledger'ı (activityType+sourceId+date ile tekrar XP engelleme), günlük giriş/duygu/egzersiz/7 günlük streak XP ödülleri, gerçek verilerden hesaplanan streak, 10 rozetlik JSON içerik motoru ve kural motoru (all_badges meta-rozeti dahil), rozet açılışında yıldız+konfeti animasyonu (reduced-motion uyumlu); gerçek cihazda adb üzerinden uçtan uca doğrulandı (XP/streak/rozetler force-stop + yeniden açma sonrası korundu). analyze/test (51/51)/debug APK geçti.
+
 **Amaç:** Oyunlaştırmayı ana terapi amacını destekleyecek şekilde eklemek.
 
 ### XP
