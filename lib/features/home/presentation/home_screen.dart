@@ -5,10 +5,8 @@ import '../../../core/badges/badge_icon.dart';
 import '../../../core/badges/badge_providers.dart';
 import '../../../core/streak/streak_providers.dart';
 import '../../../core/theme/app_dimens.dart';
-import '../../../core/utils/date_key.dart';
+import '../../../core/widgets/today_goals_card.dart';
 import '../../../core/xp/xp_providers.dart';
-import '../../exercises/application/exercise_completion_providers.dart';
-import '../../games/application/game_completion_providers.dart';
 import '../../onboarding/application/profile_providers.dart';
 import '../../onboarding/presentation/widgets/avatar_painter.dart';
 import '../application/emotion_providers.dart';
@@ -97,7 +95,7 @@ class HomeScreen extends ConsumerWidget {
               const SizedBox(height: AppDimens.spaceLg),
               const _WeeklyEmotionCalendar(),
               const SizedBox(height: AppDimens.spaceLg),
-              const _TodayGoals(),
+              const TodayGoalsCard(),
               const SizedBox(height: AppDimens.spaceLg),
               const _WeeklyProgress(),
               const SizedBox(height: AppDimens.spaceLg),
@@ -363,70 +361,6 @@ class _WeeklyEmotionCalendar extends ConsumerWidget {
           }),
         ),
       ],
-    );
-  }
-}
-
-class _TodayGoals extends ConsumerWidget {
-  const _TodayGoals();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final recordsAsync = ref.watch(emotionRecordsProvider);
-    final todayKey = EmotionRecordRepository.dateKey(DateTime.now());
-    final emotionDone = recordsAsync.valueOrNull?[todayKey] != null;
-
-    final completionsAsync = ref.watch(exerciseCompletionsProvider);
-    final exerciseDone =
-        completionsAsync.valueOrNull?.any(
-          (c) => dateKey(c.date) == todayKey,
-        ) ??
-        false;
-
-    final gamesAsync = ref.watch(gameCompletionsProvider);
-    final gameDone =
-        gamesAsync.valueOrNull?.any((g) => dateKey(g.date) == todayKey) ??
-        false;
-
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(AppDimens.spaceMd),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('🌟 Bugünkü Görev', style: Theme.of(context).textTheme.titleMedium),
-            const SizedBox(height: AppDimens.spaceSm),
-            _GoalRow(label: 'Duygunu seç', done: emotionDone),
-            _GoalRow(label: 'Egzersiz yap', done: exerciseDone),
-            _GoalRow(label: 'Mini oyun oyna', done: gameDone),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _GoalRow extends StatelessWidget {
-  const _GoalRow({required this.label, required this.done});
-
-  final String label;
-  final bool done;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
-      child: Row(
-        children: [
-          Icon(
-            done ? Icons.check_circle_rounded : Icons.circle_outlined,
-            size: AppDimens.iconSizeSm,
-            color: done ? Theme.of(context).colorScheme.primary : Colors.grey,
-          ),
-          const SizedBox(width: AppDimens.spaceSm),
-          Text(label),
-        ],
-      ),
     );
   }
 }

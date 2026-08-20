@@ -594,6 +594,8 @@ Manuel:
 
 # Faz 8 — İlerleme + Günlük Hedef
 
+**✅ TAMAMLANDI** — İlerleme ekranı: istatistik kartları (Toplam XP, Seri, Egzersiz, Oyun), Bugünkü Görev (Home ile paylaşılan `TodayGoalsCard`), Egzersiz/XP/Duygu geçmişi — tamamı gerçek yerel verilerden hesaplanıyor, mock data yok. Gerçek cihazda uçtan uca doğrulandı: duygu kaydı + egzersiz + oyun tamamlandıktan sonra İlerleme ekranındaki her sayı (65 XP, 1 gün seri, 1 egzersiz, 1 oyun) ve geçmiş listeleri yapılan işlemlerle birebir eşleşiyor. QA sırasında bulunan gerçek hata (istatistik kartlarında "BOTTOM OVERFLOWED BY 10 PIXELS") düzeltildi, telefon genişliğini taklit eden bir regresyon testi eklendi ve cihazda taşma olmadığı doğrulandı. analyze/test (70/70)/debug APK geçti.
+
 **Amaç:** Çocuğun kendi gelişimini görebileceği ekranı tamamlamak.
 
 ### Progress
