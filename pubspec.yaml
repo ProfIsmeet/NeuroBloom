@@ -49,7 +49,7 @@ dependencies:
 
   # Platform services
   flutter_tts: ^4.2.0
-  record: ^5.2.0
+  record: ^7.1.1
   just_audio: ^0.9.42
   permission_handler: ^11.3.1
 
